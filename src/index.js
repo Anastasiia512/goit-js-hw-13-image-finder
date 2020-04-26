@@ -15,12 +15,12 @@ refs.loadMoreButton.addEventListener('click', loadMoreButtonHandle);
 function searchFormSubmitHandler(e) {
   e.preventDefault();
   const input = e.currentTarget.elements.query;
- 
+
   clearListItems();
   apiService.resetPage();
   apiService.searchQuery = input.value;
   apiService.queryArticles().then(insertListItems);
-  input.value = "";
+  input.value = '';
 }
 
 function loadMoreButtonHandle() {
@@ -28,17 +28,27 @@ function loadMoreButtonHandle() {
 }
 
 function insertListItems(resultItemCard) {
-const markup = galleryItemMarkup(resultItemCard);
+  const markup = galleryItemMarkup(resultItemCard);
   refs.ulGallery.insertAdjacentHTML('beforeend', markup);
+  if (apiService.page > 2) {
+    window.scrollBy({
+      top: document.documentElement.clientHeight - refs.searchForm.offsetHeight,
+      behavior: 'smooth',
+    });
+  }
+
+  if (markup) {
+    refs.loadMoreButton.classList.add('visible');
+  }
 }
 
 function clearListItems() {
-    refs.ulGallery.innerHTML = '';
+  refs.ulGallery.innerHTML = '';
 }
-refs.buttonUpward.addEventListener('click', () => window.scrollTo({
-  top: 0,
-  left: 0,
-  behavior: 'smooth',
-
-}));
-    
+refs.buttonUpward.addEventListener('click', () =>
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  }),
+);
