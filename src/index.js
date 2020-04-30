@@ -45,6 +45,7 @@ function insertListItems(resultItemCard) {
 function clearListItems() {
   refs.ulGallery.innerHTML = '';
 }
+
 refs.buttonUpward.addEventListener('click', () =>
   window.scrollTo({
     top: 0,
